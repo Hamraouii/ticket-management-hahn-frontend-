@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { TicketService } from '../services/ticket.service';
 import { Ticket, Status, CreateTicketDto, UpdateTicketDto } from '../models/Ticket.model';
+import { MatDialog } from '@angular/material/dialog';
+import { TicketDialogComponent } from '../ticket-dialog/ticket-dialog.component';
+
 
 @Component({
   selector: 'app-ticket-list',
@@ -13,7 +16,17 @@ export class TicketListComponent implements OnInit {
   newTicket: CreateTicketDto = { description: '', status: Status.Open };
   editingTicket: UpdateTicketDto | null = null;
 
-  constructor(private ticketService: TicketService) { }
+  constructor(private ticketService: TicketService, public dialog: MatDialog) { }
+
+  openAddTicketDialog(): void {
+    const dialogRef = this.dialog.open(TicketDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.tickets.push(result);
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.loadTickets();
@@ -22,14 +35,23 @@ export class TicketListComponent implements OnInit {
 
   loadTickets(): void {
     this.ticketService.getTickets().subscribe(
-      (data: Ticket[]) => {
-        this.tickets = data;
+      (data: any[]) => {
+        this.tickets = data.map(ticket => ({
+          ...ticket,
+          status: this.mapStatus(ticket.status)
+        }));
       },
       error => {
         console.error('Error fetching tickets', error);
       }
     );
   }
+
+
+  private mapStatus(status: number): Status {
+    return status === 0 ? Status.Open : Status.Closed;
+  }
+
 
   createTicket(): void {
     this.ticketService.createTicket(this.newTicket).subscribe(

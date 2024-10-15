@@ -1,44 +1,28 @@
 <div class="container">
-    <h2>Ticket List</h2>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Description</th>
-          <th>Status</th>
-          <th>Date</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let ticket of tickets">
-          <td>{{ ticket.id }}</td>
-          <td>{{ ticket.description }}</td>
-          <td [style.color]="getStatusColor(ticket.status)">{{ ticket.status }}</td>
-          <td>{{ ticket.date | date }}</td>
-          <td>
-            <button (click)="updateTicket()">Edit</button>
-            <button (click)="deleteTicket(ticket.id)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
-  <!-- Add New Ticket Form -->
-  <div class="container">
-    <h3>Add New Ticket</h3>
-    <form (ngSubmit)="createTicket()">
-      <div>
-        <label for="description">Description:</label>
-        <input type="text" id="description" [(ngModel)]="newTicket.description" name="description" required>
-      </div>
-      <div>
-        <label for="status">Status:</label>
-        <select id="status" [(ngModel)]="newTicket.status" name="status" required>
-          <option *ngFor="let status of statusOptions" [value]="status">{{ status }}</option>
-        </select>
-      </div>
-      <button type="submit">Add Ticket</button>
-    </form>
-  </div>
+  <h2>Ticket List</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr class="table-header">
+        <th>Ticket ID</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ticket of tickets">
+        <td>{{ ticket.id }}</td>
+        <td>{{ ticket.description }}</td>
+        <td [style.color]="getStatusColor(ticket.status)">{{ ticket.status }}</td>
+        <td>{{ ticket.date | date }}</td>
+        <td>
+          <a class="update-link" (click)="updateTicket()">Update</a>
+          <a class="delete-link" (click)="deleteTicket(ticket.id)">Delete</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button class="btn btn-success" (click)="openAddTicketDialog()">Add New</button>
+</div>

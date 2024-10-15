@@ -1,0 +1,46 @@
+.container {
+  .table-header {
+    background-color: #28a745; /* Green header */
+    color: white; /* White text in the header */
+    text-align: center;
+
+    th {
+      padding: 15px;
+    }
+  }
+
+  td {
+    text-align: center;
+  }
+
+  .update-link {
+    color: #1e90ff; /* Blue color for Update */
+    margin-right: 10px;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .delete-link {
+    color: #ff4500; /* Red color for Delete */
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .btn-success {
+    background-color: #28a745; /* Green button */
+    border-color: #28a745;
+    color: white;
+    margin-top: 15px;
+
+    &:hover {
+      background-color: #218838;
+      border-color: #1e7e34;
+    }
+  }
+}

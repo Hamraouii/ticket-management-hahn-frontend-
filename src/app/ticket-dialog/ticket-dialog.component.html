@@ -1,0 +1,16 @@
+<h2>Add New Ticket</h2>
+<form (ngSubmit)="createTicket()">
+  <mat-form-field appearance="fill">
+    <mat-label>Description</mat-label>
+    <input matInput [(ngModel)]="newTicket.description" name="description" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Status</mat-label>
+    <mat-select [(ngModel)]="newTicket.status" name="status" required>
+      <mat-option *ngFor="let status of statusOptions" [value]="status">{{ status }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Add Ticket</button>
+</form>
