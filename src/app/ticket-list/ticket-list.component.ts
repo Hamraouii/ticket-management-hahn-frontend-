@@ -3,6 +3,7 @@ import { TicketService } from '../services/ticket.service';
 import { Ticket, Status, CreateTicketDto, UpdateTicketDto } from '../models/Ticket.model';
 import { MatDialog } from '@angular/material/dialog';
 import { TicketDialogComponent } from '../ticket-dialog/ticket-dialog.component';
+import { tick } from '@angular/core/testing';
 
 
 @Component({
@@ -15,6 +16,10 @@ export class TicketListComponent implements OnInit {
   statusOptions: Status[] = [];
   newTicket: CreateTicketDto = { description: '', status: Status.Open };
   editingTicket: UpdateTicketDto | null = null;
+  currentPage: number = 1;
+  itemsPerPage: number = 4; 
+  totalPages: number = 0;
+  
 
   constructor(private ticketService: TicketService, public dialog: MatDialog) { }
 
@@ -28,18 +33,31 @@ export class TicketListComponent implements OnInit {
     });
   }
 
+  next(){
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.loadTickets();
+    }
+  }
+  previous(){
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loadTickets();
+    }
+  }
+
   ngOnInit(): void {
     this.loadTickets();
     this.statusOptions = this.ticketService.getStatusOptions();
   }
 
   loadTickets(): void {
-    this.ticketService.getTickets().subscribe(
-      (data: any[]) => {
-        this.tickets = data.map(ticket => ({
-          ...ticket,
-          status: this.mapStatus(ticket.status)
-        }));
+    this.ticketService.getTickets(this.currentPage, this.itemsPerPage).subscribe(
+      (data: any) => {
+        console.log(data.items)
+        this.tickets = data.items.map((ticket:any)=>({...ticket,status:ticket.status==1?"Closed":"Open"}));
+        this.totalPages = Math.ceil(data.totalCount / this.itemsPerPage);
+        
       },
       error => {
         console.error('Error fetching tickets', error);

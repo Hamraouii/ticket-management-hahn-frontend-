@@ -1,5 +1,9 @@
 .container {
   margin-top: 20px;
+  background-color: #ffffff; /* Set form background to white */
+  padding: 20px;
+  border-radius: 8px; /* Add rounded corners */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
 
   table {
     width: 100%;
@@ -8,4 +12,23 @@
   button {
     margin-right: 10px;
   }
+}
+
+.ticket-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; 
+
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+.green-button {
+  background-color: #28a745 !important; 
+  color: white;
+}
+
+.green-button:hover {
+  background-color: #218838 !important; 
 }

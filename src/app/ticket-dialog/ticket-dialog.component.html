@@ -1,8 +1,8 @@
 <h2>Add New Ticket</h2>
-<form (ngSubmit)="createTicket()">
+<form #ticketForm="ngForm" (ngSubmit)="createTicket(ticketForm)" class="ticket-form">
   <mat-form-field appearance="fill">
     <mat-label>Description</mat-label>
-    <input matInput [(ngModel)]="newTicket.description" name="description" required />
+    <input matInput [(ngModel)]="newTicket.description" name="description" required>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
@@ -12,5 +12,12 @@
     </mat-select>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit">Add Ticket</button>
+  <mat-form-field appearance="fill">
+    <mat-label>Date</mat-label>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="newTicket.date" name="date" required>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="!ticketForm.form.valid">Add Ticket</button>
 </form>

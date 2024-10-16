@@ -13,7 +13,7 @@ export class TicketService {
 
   getTickets(page: number = 1, pageSize: number = 10): Observable<Ticket[]> {
     let params = new HttpParams()
-      .set('page', page.toString())
+      .set('PageNumber', page.toString())
       .set('pageSize', pageSize.toString());
 
     return this.http.get<Ticket[]>(this.apiUrl, { params });

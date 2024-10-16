@@ -1,3 +1,5 @@
+
+
 <div class="container">
   <h2>Ticket List</h2>
   <table class="table table-bordered">
@@ -24,5 +26,12 @@
     </tbody>
   </table>
 
+  <div class="pagination-controls">
+    <button class="btn btn-secondary" (click)="previous()" [disabled]="currentPage === 1">Previous</button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button class="btn btn-secondary" (click)="next()" [disabled]="currentPage === totalPages">Next</button>
+  </div>
+  
   <button class="btn btn-success" (click)="openAddTicketDialog()">Add New</button>
+  
 </div>
