@@ -2,7 +2,22 @@
 <form #ticketForm="ngForm" (ngSubmit)="createTicket(ticketForm)" class="ticket-form">
   <mat-form-field appearance="fill">
     <mat-label>Description</mat-label>
-    <input matInput [(ngModel)]="newTicket.description" name="description" required>
+    <input 
+      matInput 
+      [(ngModel)]="newTicket.description" 
+      name="description" 
+      required 
+      minlength="3" 
+      maxlength="150">
+    <mat-error *ngIf="ticketForm.form.get('description')?.errors?.['required']">
+      Description is required.
+    </mat-error>
+    <mat-error *ngIf="ticketForm.form.get('description')?.errors?.['minlength']">
+      Description must be at least 3 characters.
+    </mat-error>
+    <mat-error *ngIf="ticketForm.form.get('description')?.errors?.['maxlength']">
+      Description cannot exceed 150 characters.
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
@@ -19,5 +34,9 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit" [disabled]="!ticketForm.form.valid">Add Ticket</button>
+  <button mat-raised-button color="primary" type="submit" [disabled]="!ticketForm.form.valid">
+    Add Ticket
+  </button>
+
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 </form>

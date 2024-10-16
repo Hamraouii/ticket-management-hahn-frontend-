@@ -12,7 +12,8 @@ export enum Status {
   
   export interface CreateTicketDto {
     description: string;
-    status: Status;
+    status: number;
+    date: string;
   }
   
   export interface UpdateTicketDto {

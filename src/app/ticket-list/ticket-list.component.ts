@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TicketService } from '../services/ticket.service';
-import { Ticket, Status, CreateTicketDto, UpdateTicketDto } from '../models/Ticket.model';
+import { Ticket, Status, UpdateTicketDto } from '../models/Ticket.model';
 import { MatDialog } from '@angular/material/dialog';
 import { TicketDialogComponent } from '../ticket-dialog/ticket-dialog.component';
 import { tick } from '@angular/core/testing';
@@ -14,7 +14,6 @@ import { tick } from '@angular/core/testing';
 export class TicketListComponent implements OnInit {
   tickets: Ticket[] = [];
   statusOptions: Status[] = [];
-  newTicket: CreateTicketDto = { description: '', status: Status.Open };
   editingTicket: UpdateTicketDto | null = null;
   currentPage: number = 1;
   itemsPerPage: number = 4; 
@@ -71,17 +70,7 @@ export class TicketListComponent implements OnInit {
   }
 
 
-  createTicket(): void {
-    this.ticketService.createTicket(this.newTicket).subscribe(
-      (createdTicket: Ticket) => {
-        this.tickets.push(createdTicket);
-        this.newTicket = { description: '', status: Status.Open };
-      },
-      error => {
-        console.error('Error creating ticket', error);
-      }
-    );
-  }
+
 
   startEdit(ticket: Ticket): void {
     this.editingTicket = { ...ticket };
